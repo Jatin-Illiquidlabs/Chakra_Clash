@@ -1,0 +1,14 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\work\\projects\\chakra_clash\\plugins\\eosintegrationkit51\\eosintegrationkit\\source\\eikloginmethods\\private\\eikloginmethods.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\work\\projects\\chakra_clash\\intermediate\\build\\win64\\chakra_clash\\development\\engine\\sharedpch.engine.shadowerrors.inclorderunreal5_0.h.pch",
+        "Includes": [
+            "c:\\work\\projects\\chakra_clash\\plugins\\eosintegrationkit51\\eosintegrationkit\\intermediate\\build\\win64\\unrealgame\\development\\eikloginmethods\\definitions.eikloginmethods.h",
+            "c:\\work\\projects\\chakra_clash\\plugins\\eosintegrationkit51\\eosintegrationkit\\source\\eikloginmethods\\public\\eikloginmethods.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
