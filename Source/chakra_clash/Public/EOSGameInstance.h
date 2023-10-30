@@ -7,11 +7,46 @@
 #include "EOSGameInstance.generated.h"
 
 /**
- * 
+ *
  */
+
+class FOnlineSessionSearch;
+namespace EOnJoinSessionCompleteResult { enum Type; }
+
 UCLASS()
 class CHAKRA_CLASH_API UEOSGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
+
+public:
+	UEOSGameInstance();
+
+	virtual void Init() override;
+
+	void Login();
+	void OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, const FUniqueNetId& UserId, const FString& Error);
+
+	UFUNCTION(BlueprintCallable)
+	void CreateSession();
+	void OnCreateSessionComplete(FName SessionName, bool bWasSuccessful);
+
+	UFUNCTION(BlueprintCallable)
+	void DestroySession();
+	void OnDestroySessionComplete(FName SessionName, bool bWasSuccessful);
+
+	UFUNCTION(BlueprintCallable)
+	void FindSession();
+	void OnFindSessionComplete(bool bWasSuccessful);
+	TSharedPtr<FOnlineSessionSearch> SearchSettings;
+	void OnJoinSessionComplete(FName SessionName, EOnJoinSessionCompleteResult::Type Result);
+
+	UFUNCTION(BlueprintCallable)
+	void GetAllFriends();
+	void OnGetAllFriendsComplete(int32 LocalUserNum, bool bWasSuccessful, const FString& ListName, const FString& ErrorStr);
+
+protected:
+	class IOnlineSubsystem* OnlineSubsystem;
+
+	bool bIsLoggedIn;
 	
 };
