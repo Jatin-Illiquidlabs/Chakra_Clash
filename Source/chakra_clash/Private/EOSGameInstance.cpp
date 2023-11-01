@@ -10,7 +10,8 @@
 #include <Kismet/GameplayStatics.h>
 #include "Engine.h"
 
-const FName TestSessionName = FName("Test Session");
+const FName DevaSessionName = FName("Deva Session");
+const FName ShaktiSessionName = FName("Shakti Session");
 
 UEOSGameInstance::UEOSGameInstance()
 {
@@ -35,6 +36,7 @@ void UEOSGameInstance::Login()
 			FOnlineAccountCredentials Credentials;
 			Credentials.Id = FString();
 			Credentials.Token = FString();
+			//Credentials.Type = FString("accountportal");
 			Credentials.Type = FString("accountportal");
 
 			Identity->OnLoginCompleteDelegates->AddUObject(this, &UEOSGameInstance::OnLoginComplete);
@@ -72,7 +74,7 @@ void UEOSGameInstance::CreateSession()
 				SessionSettings.bIsDedicated = false;
 				SessionSettings.bShouldAdvertise = true;
 				SessionSettings.bIsLANMatch = false;
-				SessionSettings.NumPublicConnections = 5;
+				SessionSettings.NumPublicConnections = 2;
 				SessionSettings.bAllowJoinInProgress = true;
 				SessionSettings.bAllowJoinViaPresence = true;
 				SessionSettings.bUsesPresence = true;
@@ -81,7 +83,18 @@ void UEOSGameInstance::CreateSession()
 				SessionSettings.Set(SEARCH_KEYWORDS, FString("TestLobby"), EOnlineDataAdvertisementType::ViaOnlineService);
 
 				SessionPtr->OnCreateSessionCompleteDelegates.AddUObject(this, &UEOSGameInstance::OnCreateSessionComplete);
-				SessionPtr->CreateSession(0, TestSessionName, SessionSettings);
+
+				switch (SelectedPlayer)	
+				{
+				case Deva:
+					SessionPtr->CreateSession(0, DevaSessionName, SessionSettings);
+					break;
+				case Shakti:
+					SessionPtr->CreateSession(0, ShaktiSessionName, SessionSettings);
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -117,7 +130,18 @@ void UEOSGameInstance::DestroySession()
 			if (IOnlineSessionPtr SessionPtr = OnlineSubsystem->GetSessionInterface())
 			{
 				SessionPtr->OnDestroySessionCompleteDelegates.AddUObject(this, &UEOSGameInstance::OnDestroySessionComplete);
-				SessionPtr->DestroySession(TestSessionName);
+				switch (SelectedPlayer)
+				{
+				case Deva:
+					SessionPtr->DestroySession(DevaSessionName);
+					break;
+				case Shakti:
+					SessionPtr->DestroySession(ShaktiSessionName);
+
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}
@@ -148,6 +172,7 @@ void UEOSGameInstance::FindSession()
 				SearchSettings->QuerySettings.Set(SEARCH_KEYWORDS, FString("TestLobby"), EOnlineComparisonOp::Equals);
 				SearchSettings->QuerySettings.Set(SEARCH_LOBBIES, true, EOnlineComparisonOp::Equals);
 
+
 				SessionPtr->OnFindSessionsCompleteDelegates.AddUObject(this, &UEOSGameInstance::OnFindSessionComplete);
 				SessionPtr->FindSessions(0, SearchSettings.ToSharedRef());
 			}
@@ -173,8 +198,26 @@ void UEOSGameInstance::OnFindSessionComplete(bool bWasSuccessful)
 			{
 				if (SearchSettings->SearchResults.Num())
 				{
-					SessionPtr->OnJoinSessionCompleteDelegates.AddUObject(this, &UEOSGameInstance::OnJoinSessionComplete);
-					SessionPtr->JoinSession(0, TestSessionName, SearchSettings->SearchResults[0]);
+					for (int i = 0; i < SearchSettings->MaxSearchResults; i++)
+					{
+						if (SearchSettings->SearchResults[i].Session.NumOpenPublicConnections == 1)
+						{
+							SessionPtr->OnJoinSessionCompleteDelegates.AddUObject(this, &UEOSGameInstance::OnJoinSessionComplete);
+							switch (SelectedPlayer)
+							{
+							case Deva:
+								SessionPtr->JoinSession(0, DevaSessionName, SearchSettings->SearchResults[i]);
+								break;
+							case Shakti:
+								SessionPtr->JoinSession(0, ShaktiSessionName, SearchSettings->SearchResults[i]);
+								break;
+							default:
+								break;
+							}
+
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -277,4 +320,9 @@ void UEOSGameInstance::OnGetAllFriendsComplete(int32 LocalUserNum, bool bWasSucc
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Was Successful At Getting FriendsList"));
 
 	}
+}
+
+void UEOSGameInstance::UpdateSelectedPlayer(PlayerType Selected)
+{
+	SelectedPlayer = Selected;
 }

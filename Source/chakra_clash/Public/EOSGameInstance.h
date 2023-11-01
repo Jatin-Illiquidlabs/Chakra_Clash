@@ -10,6 +10,13 @@
  *
  */
 
+UENUM(BlueprintType)
+enum PlayerType
+{
+	Deva,
+	Shakti
+};
+
 class FOnlineSessionSearch;
 namespace EOnJoinSessionCompleteResult { enum Type; }
 
@@ -44,9 +51,17 @@ public:
 	void GetAllFriends();
 	void OnGetAllFriendsComplete(int32 LocalUserNum, bool bWasSuccessful, const FString& ListName, const FString& ErrorStr);
 
+	UFUNCTION(BlueprintCallable)
+	void UpdateSelectedPlayer(PlayerType Selected);
+
+
 protected:
 	class IOnlineSubsystem* OnlineSubsystem;
 
 	bool bIsLoggedIn;
+
+public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)	
+	TEnumAsByte<PlayerType> SelectedPlayer;
 	
 };
