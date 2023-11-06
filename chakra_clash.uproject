@@ -41,6 +41,10 @@
 		{
 			"Name": "EOSShared",
 			"Enabled": true
+		},
+		{
+			"Name": "AchievementSystem",
+			"Enabled": true
 		}
 	]
 }
