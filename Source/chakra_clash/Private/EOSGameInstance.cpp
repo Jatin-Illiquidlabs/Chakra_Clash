@@ -206,10 +206,10 @@ void UEOSGameInstance::OnFindSessionComplete(bool bWasSuccessful)
 							switch (SelectedPlayer)
 							{
 							case Deva:
-								SessionPtr->JoinSession(0, DevaSessionName, SearchSettings->SearchResults[i]);
+								SessionPtr->JoinSession(0, ShaktiSessionName, SearchSettings->SearchResults[i]);
 								break;
 							case Shakti:
-								SessionPtr->JoinSession(0, ShaktiSessionName, SearchSettings->SearchResults[i]);
+								SessionPtr->JoinSession(0, DevaSessionName, SearchSettings->SearchResults[i]);
 								break;
 							default:
 								break;
