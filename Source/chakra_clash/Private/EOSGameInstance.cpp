@@ -37,6 +37,23 @@ void UEOSGameInstance::Login()
 			Credentials.Id = FString();
 			Credentials.Token = FString();
 			//Credentials.Type = FString("accountportal");
+			Credentials.Type = FString("persistentauth");
+
+			Identity->OnLoginCompleteDelegates->AddUObject(this, &UEOSGameInstance::OnLoginComplete);
+			Identity->Login(0, Credentials);
+		}
+	}
+}
+
+void UEOSGameInstance::LoginWith_AccountPortal()
+{
+	if (OnlineSubsystem)
+	{
+		if (IOnlineIdentityPtr Identity = OnlineSubsystem->GetIdentityInterface())
+		{
+			FOnlineAccountCredentials Credentials;
+			Credentials.Id = FString();
+			Credentials.Token = FString();
 			Credentials.Type = FString("accountportal");
 
 			Identity->OnLoginCompleteDelegates->AddUObject(this, &UEOSGameInstance::OnLoginComplete);
@@ -102,6 +119,8 @@ void UEOSGameInstance::CreateSession()
 	{
 		UE_LOG(LogTemp, Error, TEXT("Cannot Create Session, Not Logged In"));
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Cannot Create Session, Not Logged In"));
+
+		LoginWith_AccountPortal();
 	}
 }
 
@@ -171,12 +190,18 @@ void UEOSGameInstance::FindSession()
 				SearchSettings->MaxSearchResults = 5000;
 				SearchSettings->QuerySettings.Set(SEARCH_KEYWORDS, FString("TestLobby"), EOnlineComparisonOp::Equals);
 				SearchSettings->QuerySettings.Set(SEARCH_LOBBIES, true, EOnlineComparisonOp::Equals);
+				//SearchSettings->QuerySettings.Set(SEARCH_NONEMPTY_SERVERS_ONLY, true, EOnlineComparisonOp::Equals);
+				SearchSettings->QuerySettings.Set(SEARCH_MINSLOTSAVAILABLE, 1, EOnlineComparisonOp::Equals);
 
 
 				SessionPtr->OnFindSessionsCompleteDelegates.AddUObject(this, &UEOSGameInstance::OnFindSessionComplete);
 				SessionPtr->FindSessions(0, SearchSettings.ToSharedRef());
 			}
 		}
+	}
+	else
+	{
+		LoginWith_AccountPortal();
 	}
 }
 

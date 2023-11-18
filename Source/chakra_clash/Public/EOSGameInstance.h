@@ -31,6 +31,7 @@ public:
 	virtual void Init() override;
 
 	void Login();
+	void LoginWith_AccountPortal();
 	void OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, const FUniqueNetId& UserId, const FString& Error);
 
 	UFUNCTION(BlueprintCallable)
