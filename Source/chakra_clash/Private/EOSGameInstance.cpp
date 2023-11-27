@@ -77,6 +77,10 @@ void UEOSGameInstance::OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, 
 			Identity->ClearOnLoginCompleteDelegates(0, this);
 		}
 	}
+	else
+	{
+		LoginWith_AccountPortal();
+	}
 }
 
 void UEOSGameInstance::CreateSession()
