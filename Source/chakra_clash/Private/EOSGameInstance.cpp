@@ -64,8 +64,16 @@ void UEOSGameInstance::LoginWith_AccountPortal()
 
 void UEOSGameInstance::OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, const FUniqueNetId& UserId, const FString& Error)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Success: %d"), bWasSuccessful);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Login Success: %d"), bWasSuccessful);
+	if (bWasSuccessful)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Success: %d"), bWasSuccessful);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Login Success: %d"), bWasSuccessful);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("FAILED: %d"), bWasSuccessful);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Login FAILED: %d"), bWasSuccessful);
+	}
 
 
 	bIsLoggedIn = true;
@@ -211,14 +219,21 @@ void UEOSGameInstance::FindSession()
 
 void UEOSGameInstance::OnFindSessionComplete(bool bWasSuccessful)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Success: %d"), bWasSuccessful);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Success: %d"), bWasSuccessful);
-
+	if (bWasSuccessful)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Success: %d"), bWasSuccessful);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Success: %d"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Failed: %d"), bWasSuccessful);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Failed: %d"));
+	}
 
 	if (bWasSuccessful)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Found %d Lobbies"), SearchSettings->SearchResults.Num());
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("Found %d Lobbies"), SearchSettings->SearchResults.Num()));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("Found %d Lobbies")));
 
 
 		if (OnlineSubsystem)
@@ -248,6 +263,16 @@ void UEOSGameInstance::OnFindSessionComplete(bool bWasSuccessful)
 						}
 					}
 				}
+				else
+				{
+					UE_LOG(LogTemp, Warning, TEXT("SEARCH RESULT IS 0"));
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("SEARCH RESULT IS 0")));
+				}
+			}
+			else
+			{
+				UE_LOG(LogTemp, Warning, TEXT("NO SESSION INTERFACE"));
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("NO SESSION INTERFACE")));
 			}
 		}
 	}
