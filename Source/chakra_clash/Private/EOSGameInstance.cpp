@@ -266,7 +266,7 @@ void UEOSGameInstance::OnFindSessionComplete(bool bWasSuccessful)
 				else
 				{
 					UE_LOG(LogTemp, Warning, TEXT("SEARCH RESULT IS 0"));
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("SEARCH RESULT IS 0")));
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("SEARCH RESULT IS 0")));   
 				}
 			}
 			else
