@@ -45,6 +45,10 @@
 		{
 			"Name": "AchievementSystem",
 			"Enabled": true
+		},
+		{
+			"Name": "OnlineSubsystemGoogle",
+			"Enabled": true
 		}
 	]
 }

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "Interfaces/OnlineSessionInterface.h"
 #include "EOSGameInstance.generated.h"
 
 /**
@@ -17,8 +18,9 @@ enum PlayerType
 	Shakti
 };
 
+
 class FOnlineSessionSearch;
-namespace EOnJoinSessionCompleteResult { enum Type; }
+//namespace EOnJoinSessionCompleteResult { enum Type; }
 
 UCLASS()
 class CHAKRA_CLASH_API UEOSGameInstance : public UGameInstance

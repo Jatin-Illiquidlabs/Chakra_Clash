@@ -36,8 +36,8 @@ void UEOSGameInstance::Login()
 			FOnlineAccountCredentials Credentials;
 			Credentials.Id = FString();
 			Credentials.Token = FString();
-			//Credentials.Type = FString("accountportal");
-			Credentials.Type = FString("persistentauth");
+			Credentials.Type = FString("accountportal");
+			//Credentials.Type = FString("persistentauth");
 
 			Identity->OnLoginCompleteDelegates->AddUObject(this, &UEOSGameInstance::OnLoginComplete);
 			Identity->Login(0, Credentials);
@@ -67,12 +67,12 @@ void UEOSGameInstance::OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, 
 	if (bWasSuccessful)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Success: %d"), bWasSuccessful);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Login Success: %d"), bWasSuccessful);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString("Login Success: %d"), bWasSuccessful);
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("FAILED: %d"), bWasSuccessful);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Login FAILED: %d"), bWasSuccessful);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString("Login FAILED: %d"), bWasSuccessful);
 	}
 
 
@@ -87,7 +87,7 @@ void UEOSGameInstance::OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, 
 	}
 	else
 	{
-		LoginWith_AccountPortal();
+		//LoginWith_AccountPortal();
 	}
 }
 
@@ -130,16 +130,16 @@ void UEOSGameInstance::CreateSession()
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("Cannot Create Session, Not Logged In"));
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Cannot Create Session, Not Logged In"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString("Cannot Create Session, Not Logged In"));
 
-		LoginWith_AccountPortal();
+		//LoginWith_AccountPortal();
 	}
 }
 
 void UEOSGameInstance::OnCreateSessionComplete(FName SessionName, bool bWasSuccessful)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Create Session Success: %d"), bWasSuccessful);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("Create Session Success: %d"), bWasSuccessful));
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString(TEXT("Create Session Success: %d"), bWasSuccessful));
 
 
 	if (OnlineSubsystem)
@@ -213,7 +213,7 @@ void UEOSGameInstance::FindSession()
 	}
 	else
 	{
-		LoginWith_AccountPortal();
+		//LoginWith_AccountPortal();
 	}
 }
 
@@ -222,18 +222,18 @@ void UEOSGameInstance::OnFindSessionComplete(bool bWasSuccessful)
 	if (bWasSuccessful)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Success: %d"), bWasSuccessful);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Success: %d"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString("Success: %d"));
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Failed: %d"), bWasSuccessful);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Failed: %d"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString("Failed: %d"));
 	}
 
 	if (bWasSuccessful)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Found %d Lobbies"), SearchSettings->SearchResults.Num());
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("Found %d Lobbies")));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString(TEXT("Found %d Lobbies")));
 
 
 		if (OnlineSubsystem)
@@ -266,13 +266,13 @@ void UEOSGameInstance::OnFindSessionComplete(bool bWasSuccessful)
 				else
 				{
 					UE_LOG(LogTemp, Warning, TEXT("SEARCH RESULT IS 0"));
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("SEARCH RESULT IS 0")));   
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString(TEXT("SEARCH RESULT IS 0")));   
 				}
 			}
 			else
 			{
 				UE_LOG(LogTemp, Warning, TEXT("NO SESSION INTERFACE"));
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("NO SESSION INTERFACE")));
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString(TEXT("NO SESSION INTERFACE")));
 			}
 		}
 	}
@@ -304,25 +304,25 @@ void UEOSGameInstance::OnJoinSessionComplete(FName SessionName, EOnJoinSessionCo
 				else
 				{
 					UE_LOG(LogTemp, Warning, TEXT("plAYER CONTROLLER ERROR"));
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("plAYER CONTROLLER ERROR")));
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString(TEXT("plAYER CONTROLLER ERROR")));
 				}
 			}
 			else
 			{
 				UE_LOG(LogTemp, Warning, TEXT("CONNECTION INFO IS EMPTY"));
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("CONNECTION INFO IS EMPTY")));
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString(TEXT("CONNECTION INFO IS EMPTY")));
 			}
 		}
 		else
 		{
 			UE_LOG(LogTemp, Warning, TEXT("UNABLE TO FIND SESSION INTERFACE"));
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("UNABLE TO FIND SESSION INTERFACE")));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString(TEXT("UNABLE TO FIND SESSION INTERFACE")));
 		}
 	}
 	else
 	{
 		UE_LOG(LogTemp, Warning, TEXT("NO ONLINE SUBSYSTEM"));
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString(TEXT("NO ONLINE SUBSYSTEM")));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString(TEXT("NO ONLINE SUBSYSTEM")));
 	}
 
 }
@@ -364,14 +364,14 @@ void UEOSGameInstance::OnGetAllFriendsComplete(int32 LocalUserNum, bool bWasSucc
 				else
 				{
 					UE_LOG(LogTemp, Warning, TEXT("Failed At Getting FriendsList"));
-					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Failed At Getting FriendsList"));
+					GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString("Failed At Getting FriendsList"));
 
 				}
 			}
 		}
 
 		UE_LOG(LogTemp, Warning, TEXT("Was Successful At Getting FriendsList"));
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString::FString("Was Successful At Getting FriendsList"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, FString("Was Successful At Getting FriendsList"));
 
 	}
 }
