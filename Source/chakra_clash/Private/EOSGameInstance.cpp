@@ -27,6 +27,11 @@ void UEOSGameInstance::Init()
 	Login();
 }
 
+void UEOSGameInstance::Login_Btn()
+{
+	Login();
+}
+
 void UEOSGameInstance::Login()
 {
 	if (OnlineSubsystem)

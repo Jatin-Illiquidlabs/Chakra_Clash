@@ -49,6 +49,13 @@
 		{
 			"Name": "OnlineSubsystemGoogle",
 			"Enabled": true
+		},
+		{
+			"Name": "AndroidBackgroundService",
+			"Enabled": true,
+			"SupportedTargetPlatforms": [
+				"Android"
+			]
 		}
 	]
 }

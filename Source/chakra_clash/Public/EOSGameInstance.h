@@ -66,5 +66,8 @@ protected:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)	
 	TEnumAsByte<PlayerType> SelectedPlayer;
+
+	UFUNCTION(BlueprintCallable)
+	void Login_Btn();
 	
 };
