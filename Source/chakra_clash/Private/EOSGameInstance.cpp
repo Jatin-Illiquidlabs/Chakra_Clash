@@ -39,7 +39,7 @@ void UEOSGameInstance::Login()
 		if (IOnlineIdentityPtr Identity = OnlineSubsystem->GetIdentityInterface())
 		{
 			FOnlineAccountCredentials Credentials;
-			Credentials.Id = FString();
+			Credentials.Id = FString("");
 			Credentials.Token = FString();
 			Credentials.Type = FString("accountportal");
 			//Credentials.Type = FString("persistentauth");
@@ -57,7 +57,7 @@ void UEOSGameInstance::LoginWith_AccountPortal()
 		if (IOnlineIdentityPtr Identity = OnlineSubsystem->GetIdentityInterface())
 		{
 			FOnlineAccountCredentials Credentials;
-			Credentials.Id = FString();
+			Credentials.Id = FString("");
 			Credentials.Token = FString();
 			Credentials.Type = FString("accountportal");
 
@@ -81,7 +81,7 @@ void UEOSGameInstance::OnLoginComplete(int32 LocalUserNum, bool bWasSuccessful, 
 	}
 
 
-	bIsLoggedIn = true;
+	bIsLoggedIn = bWasSuccessful;
 
 	if (OnlineSubsystem)
 	{
@@ -190,7 +190,7 @@ void UEOSGameInstance::OnDestroySessionComplete(FName SessionName, bool bWasSucc
 	{
 		if (IOnlineSessionPtr SessionPtr = OnlineSubsystem->GetSessionInterface())
 		{
-
+			SessionPtr->ClearOnDestroySessionCompleteDelegates(this);
 		}
 	}
 }
